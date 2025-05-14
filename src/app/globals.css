@@ -1,26 +1,178 @@
-@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+	:root {
+		--background: 0 0% 98%;
+		--foreground: 222 47% 11%;
+		--card: 0 0% 100%;
+		--card-foreground: 222 47% 11%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 222 47% 11%;
+		--primary: 222 47% 11%;
+		--primary-foreground: 210 40% 98%;
+		--secondary: 210 40% 96.1%;
+		--secondary-foreground: 222 47% 11%;
+		--muted: 210 40% 96.1%;
+		--muted-foreground: 215.4 16.3% 46.9%;
+		--accent: 210 40% 96.1%;
+		--accent-foreground: 222 47% 11%;
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 210 40% 98%;
+		--border: 214.3 31.8% 91.4%;
+		--input: 214.3 31.8% 91.4%;
+		--ring: 222 47% 11%;
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 222 47% 11%;
+		--foreground: 210 40% 98%;
+		--card: 222 47% 11%;
+		--card-foreground: 210 40% 98%;
+		--popover: 222 47% 11%;
+		--popover-foreground: 210 40% 98%;
+		--primary: 210 40% 98%;
+		--primary-foreground: 222 47% 11%;
+		--secondary: 217.2 32.6% 17.5%;
+		--secondary-foreground: 210 40% 98%;
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 212.7 26.8% 83.9%;
+	}
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+	h1 {
+		@apply text-4xl font-bold tracking-tight lg:text-5xl;
+	}
+	h2 {
+		@apply text-3xl font-semibold tracking-tight;
+	}
+	h3 {
+		@apply text-2xl font-semibold tracking-tight;
+	}
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@layer components {
+	.bg-subtle-gradient {
+		@apply bg-gradient-to-b from-background to-secondary/50;
+	}
+
+	.accent-text {
+		@apply text-primary font-medium;
+	}
+
+	.title-text {
+		@apply text-foreground font-bold;
+	}
+
+	.soft-card {
+		@apply bg-card rounded-2xl border border-border/50 shadow-sm;
+	}
+
+	.soft-card-hover {
+		@apply transition-all duration-300 hover:shadow-md hover:border-primary/20;
+	}
+
+	.soft-shape {
+		@apply relative overflow-hidden;
+		border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+	}
+
+	.soft-shape-alt {
+		@apply relative overflow-hidden;
+		border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+	}
+
+	.hover-translate {
+		@apply transition-transform duration-300 hover:-translate-y-1;
+	}
+
+	.hover-opacity {
+		@apply transition-opacity duration-300 hover:opacity-80;
+	}
+
+	.subtle-float {
+		animation: float 8s ease-in-out infinite;
+	}
+
+	.dot-pattern {
+		background-image: radial-gradient(
+			rgba(0, 0, 0, 0.1) 1px,
+			transparent 1px
+		);
+		background-size: 20px 20px;
+	}
+
+	.line-pattern {
+		background: linear-gradient(
+				90deg,
+				rgba(0, 0, 0, 0.03) 1px,
+				transparent 1px
+			),
+			linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+		background-size: 20px 20px;
+	}
+
+	.elegant-divider {
+		@apply relative h-px w-full bg-border overflow-visible my-8;
+	}
+
+	.elegant-divider::after {
+		content: "";
+		@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary;
+	}
+
+	.subtle-underline {
+		@apply relative inline-block;
+	}
+
+	.subtle-underline::after {
+		content: "";
+		@apply absolute bottom-0 left-0 w-0 h-px bg-primary transition-all duration-300;
+	}
+
+	.subtle-underline:hover::after {
+		@apply w-full;
+	}
+
+	.decorative-circle {
+		@apply absolute rounded-full opacity-10;
+	}
+
+	.subtle-glow {
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.03);
+	}
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: hsl(var(--background));
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: hsl(var(--muted));
+		border-radius: 3px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: hsl(var(--muted-foreground));
+	}
 }
